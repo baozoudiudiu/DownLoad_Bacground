@@ -10,4 +10,6 @@
 
 @interface DownloadManager : NSObject
 
+
+
 @end

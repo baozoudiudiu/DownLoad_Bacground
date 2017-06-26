@@ -7,8 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
+
+@property (nonatomic, strong) ViewController *viewController;
 
 @end
 
@@ -17,7 +20,26 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    NSLog(@"%@",[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]);
     return YES;
+}
+
+- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler {
+    
+    NSLog(@"handleEventsForBackgroundURLSession");
+    
+    self.viewController = [[ViewController alloc] init];
+    NSURLSession *backgroundSession = [self.viewController session];
+    NSLog(@"Rejoining session with identifier %@ %@", identifier, backgroundSession);
+    [self addCompletionHandler:completionHandler forSession:identifier];
+    
+    
+}
+- (void)addCompletionHandler:(void (^)())handler
+                  forSession:(NSString *)identifier {
+    
+    self.viewController.complete = handler;
+    
 }
 
 
@@ -45,6 +67,9 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    NSLog(@"....");
+    [[NSUserDefaults standardUserDefaults] setObject:@(10000) forKey:@"testKey"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 

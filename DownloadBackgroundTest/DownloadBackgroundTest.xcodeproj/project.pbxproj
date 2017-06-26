@@ -433,6 +433,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = DownloadBackgroundTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.refiniet.DownloadBackgroundTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -444,6 +445,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = DownloadBackgroundTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.refiniet.DownloadBackgroundTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -515,6 +517,7 @@
 				6658764B1F00F27800625C00 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6658764C1F00F27800625C00 /* Build configuration list for PBXNativeTarget "DownloadBackgroundTestTests" */ = {
 			isa = XCConfigurationList;
@@ -523,6 +526,7 @@
 				6658764E1F00F27800625C00 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6658764F1F00F27800625C00 /* Build configuration list for PBXNativeTarget "DownloadBackgroundTestUITests" */ = {
 			isa = XCConfigurationList;
@@ -531,6 +535,7 @@
 				665876511F00F27800625C00 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
