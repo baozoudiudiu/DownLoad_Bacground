@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6654E4841F01EEEB00F798A0 /* NSURLSession+CorrectedResumeData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6654E4831F01EEEB00F798A0 /* NSURLSession+CorrectedResumeData.m */; };
 		665876211F00F27800625C00 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 665876201F00F27800625C00 /* main.m */; };
 		665876241F00F27800625C00 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 665876231F00F27800625C00 /* AppDelegate.m */; };
 		665876271F00F27800625C00 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 665876261F00F27800625C00 /* ViewController.m */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6654E4821F01EEEB00F798A0 /* NSURLSession+CorrectedResumeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSession+CorrectedResumeData.h"; sourceTree = "<group>"; };
+		6654E4831F01EEEB00F798A0 /* NSURLSession+CorrectedResumeData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSession+CorrectedResumeData.m"; sourceTree = "<group>"; };
 		6658761C1F00F27800625C00 /* DownloadBackgroundTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DownloadBackgroundTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		665876201F00F27800625C00 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		665876221F00F27800625C00 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -108,6 +111,8 @@
 				665876231F00F27800625C00 /* AppDelegate.m */,
 				665876251F00F27800625C00 /* ViewController.h */,
 				665876261F00F27800625C00 /* ViewController.m */,
+				6654E4821F01EEEB00F798A0 /* NSURLSession+CorrectedResumeData.h */,
+				6654E4831F01EEEB00F798A0 /* NSURLSession+CorrectedResumeData.m */,
 				665876521F0112A700625C00 /* DownloadManager.h */,
 				665876531F0112A700625C00 /* DownloadManager.m */,
 				665876281F00F27800625C00 /* Main.storyboard */,
@@ -212,6 +217,7 @@
 				TargetAttributes = {
 					6658761B1F00F27800625C00 = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = V3DM7W7CZT;
 						ProvisioningStyle = Automatic;
 					};
 					665876341F00F27800625C00 = {
@@ -279,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				665876271F00F27800625C00 /* ViewController.m in Sources */,
+				6654E4841F01EEEB00F798A0 /* NSURLSession+CorrectedResumeData.m in Sources */,
 				665876241F00F27800625C00 /* AppDelegate.m in Sources */,
 				665876211F00F27800625C00 /* main.m in Sources */,
 				665876541F0112A700625C00 /* DownloadManager.m in Sources */,
@@ -432,6 +439,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = V3DM7W7CZT;
 				INFOPLIST_FILE = DownloadBackgroundTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -444,6 +452,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = V3DM7W7CZT;
 				INFOPLIST_FILE = DownloadBackgroundTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

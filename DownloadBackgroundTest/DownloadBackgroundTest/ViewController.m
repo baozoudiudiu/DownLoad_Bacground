@@ -7,13 +7,14 @@
 //
 
 #import "ViewController.h"
+#import "NSURLSession+CorrectedResumeData.h"
 
 @interface ViewController ()<NSURLSessionDelegate, NSURLSessionDataDelegate>
 
 @property (nonatomic, weak) IBOutlet UIProgressView *progressView;
 @property (nonatomic, weak) IBOutlet UIButton   *button;
 @property (nonatomic, strong) NSString *url;
-
+@property (nonatomic, strong) NSData *resumeData;
 
 @property (nonatomic, strong) NSURLSessionDownloadTask *task;
 
@@ -21,51 +22,45 @@
 
 @implementation ViewController
 
+#pragma mark - < Life Cycle >
 - (instancetype)init {
     
     if(self = [super init]) {
         
-        self.url = @"http://vod3.nty.tv189.cn/6/mobi/vod/ts01/TVM/video/3gp/TVM/HuNanHD/2017/06/12/e5372776-626b-463c-89d5-c6d8540bed7c/Q350/Q350.3gp?sign=4688252dbe32506130e962c083529c36&qualityCode=452&version=1&guid=a394b6e5-273b-0077-f008-a82b7d18c36b&app=111010310225&cookie=058dc7c3114c237754a13ac95f7b70b0&session=058dc7c3114c237754a13ac95f7b70b0&uid=104318900000021130118&uname=18900000021&time=20170626210600&videotype=4&cid=C40142615&cname=&cateid=&dev=000001&ep=10&os=30&ps=0099&clienttype=x86_64&appver=1.15.1.4&res=1242%252A2208&channelid=&pid=1000000228&orderid=1100339630570&nid=&cp=00000175&sp=00000014&ip=223.166.74.223&ipSign=f3f15746a82bf41ef2cd792ef4981f3a&cdntoken=api_595106b888ce5&a=z2vOo%252F%252BR7mpA2EA4R7NhAZI4dG8FubQF0BFcEfW4gYGdzmkbBcVeINizmnO8yM%252Fu&pvv=&t=59513ef8&cf=tx&s2=cfcd208495d565ef66e7dff9f98764da";
+        self.url = @"http://vod3.nty.tv189.cn/6/mobi/vod/st02/2017/01/11/Q200_0cfd7439-cdc3-4279-8414-b966b54da79a.3gp?sign=6be394c33dcc1241f4c58a7bc873f8b6&qualityCode=253&version=1&guid=4afaf708-6517-96e7-4581-78f25c75c175&app=111010310225&cookie=9d77f3fb6f7fbb4eeeecafd94cf4f6fb&session=9d77f3fb6f7fbb4eeeecafd94cf4f6fb&uid=104318900000021130118&uname=18900000021&time=20170627090606&videotype=4&cid=C39504092&cname=&cateid=&dev=000001&ep=2&os=30&ps=0099&clienttype=x86_64&appver=1.15.1.4&res=750%252A1334&channelid=&pid=1000000432&orderid=1100339630570&nid=&cp=00000175&sp=00000014&ip=101.81.59.138&ipSign=5a94bab56dee27fc57043f4c1265baaa&cdntoken=api_5951af7e6c325&a=YkekjSd2P5e7D4HB0GDBCgpbaq%252BDJ55kt%252BBXLDts%252FYtfnCjJ1BJzu7zGjGcrW1hx&pvv=&t=5951e7be&cf=tx&s2=a87ff679a2f3e71d9181a67b7542122c";
         
         
     }
     return self;
 }
 
-- (void)rilegou:(NSNotification *)notify {
-    
-    NSLog(@".....");
-    
-    [[NSUserDefaults standardUserDefaults] setObject:@(10000) forKey:@"testKey"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
 - (void)dealloc {
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.resumeData = [[NSUserDefaults standardUserDefaults] objectForKey:@"resumeData"];
+    
     // Do any additional setup after loading the view, typically from a nib.
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rilegou:) name:UIApplicationWillTerminateNotification object:nil];
-    //
-    self.url = @"http://vod3.nty.tv189.cn/6/mobi/vod/ts01/TVM/video/3gp/TVM/HuNanHD/2017/06/12/e5372776-626b-463c-89d5-c6d8540bed7c/Q350/Q350.3gp?sign=4688252dbe32506130e962c083529c36&qualityCode=452&version=1&guid=a394b6e5-273b-0077-f008-a82b7d18c36b&app=111010310225&cookie=058dc7c3114c237754a13ac95f7b70b0&session=058dc7c3114c237754a13ac95f7b70b0&uid=104318900000021130118&uname=18900000021&time=20170626210600&videotype=4&cid=C40142615&cname=&cateid=&dev=000001&ep=10&os=30&ps=0099&clienttype=x86_64&appver=1.15.1.4&res=1242%252A2208&channelid=&pid=1000000228&orderid=1100339630570&nid=&cp=00000175&sp=00000014&ip=223.166.74.223&ipSign=f3f15746a82bf41ef2cd792ef4981f3a&cdntoken=api_595106b888ce5&a=z2vOo%252F%252BR7mpA2EA4R7NhAZI4dG8FubQF0BFcEfW4gYGdzmkbBcVeINizmnO8yM%252Fu&pvv=&t=59513ef8&cf=tx&s2=cfcd208495d565ef66e7dff9f98764da";
-    
-    [self.progressView setProgress:0];
-    
-    NSLog(@"------%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"testKey"]);
-    id di = [[NSUserDefaults standardUserDefaults] objectForKey:@"testKey"];
-    if(di != nil) {
-        
-        self.view.backgroundColor = [UIColor orangeColor];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSString *documentsDirectory= [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *path = [NSString stringWithFormat:@"%@/test.3gp",documentsDirectory];
+    if([manager fileExistsAtPath:path]) {
+        [manager removeItemAtPath:path error:nil];
     }
     
+    self.url = @"http://vod3.nty.tv189.cn/6/mobi/vod/st02/2017/01/11/Q200_0cfd7439-cdc3-4279-8414-b966b54da79a.3gp?sign=6be394c33dcc1241f4c58a7bc873f8b6&qualityCode=253&version=1&guid=4afaf708-6517-96e7-4581-78f25c75c175&app=111010310225&cookie=9d77f3fb6f7fbb4eeeecafd94cf4f6fb&session=9d77f3fb6f7fbb4eeeecafd94cf4f6fb&uid=104318900000021130118&uname=18900000021&time=20170627090606&videotype=4&cid=C39504092&cname=&cateid=&dev=000001&ep=2&os=30&ps=0099&clienttype=x86_64&appver=1.15.1.4&res=750%252A1334&channelid=&pid=1000000432&orderid=1100339630570&nid=&cp=00000175&sp=00000014&ip=101.81.59.138&ipSign=5a94bab56dee27fc57043f4c1265baaa&cdntoken=api_5951af7e6c325&a=YkekjSd2P5e7D4HB0GDBCgpbaq%252BDJ55kt%252BBXLDts%252FYtfnCjJ1BJzu7zGjGcrW1hx&pvv=&t=5951e7be&cf=tx&s2=a87ff679a2f3e71d9181a67b7542122c";
+//    [[NSUserDefaults standardUserDefaults] setObject:@(totalBytesWritten) forKey:@"totalBytesWritten"];
+//    [[NSUserDefaults standardUserDefaults] setObject:@(totalBytesExpectedToWrite) forKey:@"totalBytesExpectedToWrite"];
+    [self.progressView setProgress:[[[NSUserDefaults standardUserDefaults] objectForKey:@"totalBytesWritten"] floatValue] / [[[NSUserDefaults standardUserDefaults] objectForKey:@"totalBytesExpectedToWrite"] floatValue]];
 }
 
+#pragma mark - < Event Response >
 - (IBAction)buttonClick:(UIButton *)sender {
     if(sender.tag == 0) {
-        if(!self.task) {
+        if(!self.task && !self.resumeData) {
             
             NSURLSession *session = self.session;
             
@@ -77,20 +72,33 @@
             self.task = task;
             
         }
+        if(self.resumeData) {
+            
+            self.task = [self.session downloadTaskWithCorrectResumeData:self.resumeData];
+        }
         [self.task resume];
-        sender.tag = 1;
-        [sender setTitle:@"暂停" forState:UIControlStateNormal];
     }
-    else {
+    else if(sender.tag == 1){
         
-        [self.task suspend];
-        sender.tag = 0;
-        [sender setTitle:@"开始" forState:UIControlStateNormal];
+    }else if(sender.tag == 2) {
+        
+        //
+        __weak typeof  (&*self) weakSelf = self;
+        [self.task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
+            weakSelf.resumeData = resumeData;
+            [[NSUserDefaults standardUserDefaults] setObject:weakSelf.resumeData forKey:@"resumeData"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }];
+        self.task = nil;
+    }else if(sender.tag == 3) {
+        
     }
     
 }
 #pragma mark -
 #pragma mark - -- < 下载相关代理 >
+
+
 ///下载完成
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
 didFinishDownloadingToURL:(NSURL *)location {
@@ -121,6 +129,10 @@ totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
     [self.progressView setProgress:totalBytesWritten / (CGFloat)totalBytesExpectedToWrite];
     
     NSLog(@"%lf", totalBytesWritten / (CGFloat)totalBytesExpectedToWrite);
+    
+    [[NSUserDefaults standardUserDefaults] setObject:@(totalBytesWritten) forKey:@"totalBytesWritten"];
+    [[NSUserDefaults standardUserDefaults] setObject:@(totalBytesExpectedToWrite) forKey:@"totalBytesExpectedToWrite"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 ///恢复下载调用(断点续传要用)
@@ -163,6 +175,7 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
     NSLog(@"URLSessionDidFinishEventsForBackgroundURLSession");
 }
 
+#pragma mark - < Property >
 - (NSURLSession *)session {
     
     static NSURLSession *session = nil;

@@ -37,9 +37,7 @@
 }
 - (void)addCompletionHandler:(void (^)())handler
                   forSession:(NSString *)identifier {
-    
     self.viewController.complete = handler;
-    
 }
 
 
@@ -67,9 +65,6 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    NSLog(@"....");
-    [[NSUserDefaults standardUserDefaults] setObject:@(10000) forKey:@"testKey"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 
